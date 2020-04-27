@@ -16,26 +16,15 @@ use self::console::*;
 
 global_asm!(include_str!("bootstrap.s"));
 
-// TODO: Make the loader read the stack address from the linker
 #[no_mangle]
-unsafe extern "C" fn rust_start() {
-    let drive_number: u16;
-
-    // Get the drive number
-    asm!("mov $0, dx"
-        : "=r"(drive_number)
-        :
-        :
-        : "intel", "volatile");
-
-    // let dap = dap::DiskAddressPacket::new(linker_symbol!(_second_stage_start) as u16, 0x200, 0x200);
+unsafe extern "C" fn rust_start(disk_number: u16) -> ! {
     let dap = dap::DiskAddressPacket::new(
         linker_symbol!(_second_stage_start) as u16, 
         (linker_symbol!(_second_stage_start) - linker_symbol!(_bootloader_start)) as u64,
         linker_symbol!(_second_stage_end) - linker_symbol!(_second_stage_start)
     );
 
-    dap.perform_load(0x80);
+    dap.perform_load(disk_number);
 
     println(b"[#] Loaded Stage 2");
 

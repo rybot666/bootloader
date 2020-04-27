@@ -26,8 +26,6 @@ SECTIONS {
         SHORT(0xaa55)
     }
 
-    . = ALIGN(8);
-
     .stage_2 :
     {
         _second_stage_start = .;
