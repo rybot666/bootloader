@@ -1,0 +1,9 @@
+[workspace]
+members = [
+  "src/bootsector",
+  "src/stage_2"
+]
+
+[profile.release]
+opt-level = "z"
+panic = "abort"
