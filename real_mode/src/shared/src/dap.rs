@@ -34,6 +34,6 @@ impl DiskAddressPacket {
         asm!("
             int 0x13
             jc dap_load_failed
-        " :: "{si}"(self_addr), "{ax}"(0x4200), "{dx}"(disk_number) : "bx" : "intel");
+        " :: "{si}"(self_addr), "{ax}"(0x4200), "{dx}"(disk_number) : "bx" : "intel", "volatile");
     }
 }

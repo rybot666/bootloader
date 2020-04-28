@@ -19,6 +19,8 @@ global_asm!(include_str!("bootstrap.s"));
 unsafe extern "C" fn rust_start(disk_number: u16) -> ! {
     println(b"Stage 1");
 
+    check_int13h_extensions(disk_number);
+
     let dap = dap::DiskAddressPacket::new(
         linker_symbol!(_rest_of_bootloader_start) as u16, 
         (linker_symbol!(_rest_of_bootloader_start) - linker_symbol!(_bootloader_start)) as u64,
@@ -40,4 +42,13 @@ pub fn panic(_info: &PanicInfo) -> ! {
     loop {
     	utils::hlt()
     }
+}
+
+pub fn check_int13h_extensions(disk_number: u16) {
+	unsafe {
+		asm!("
+			int 0x13
+    		jc no_int13h_extensions
+        " :: "{ah}"(0x41), "{bx}"(0x55aa), "{dl}"(disk_number) :: "intel", "volatile");
+	}
 }
