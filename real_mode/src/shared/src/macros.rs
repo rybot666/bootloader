@@ -1,3 +1,4 @@
+#[macro_export]
 macro_rules! linker_symbol {
 	($symbol_name:ident) => {{
 		let symbol_value: u32;

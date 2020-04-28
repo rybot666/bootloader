@@ -16,6 +16,7 @@ pub struct DiskAddressPacket {
 }
 
 impl DiskAddressPacket {
+    #[inline(always)]
     pub fn new(memory_buffer_start: u16, file_offset: u64, bytes: u32) -> Self {
         Self {
             packet_size: 0x10,
@@ -27,6 +28,7 @@ impl DiskAddressPacket {
         }
     }
 
+    #[inline(always)]
     pub unsafe fn perform_load(&self, disk_number: u16) {
         let self_addr = self as *const Self as u16;
         asm!("

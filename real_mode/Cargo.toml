@@ -1,5 +1,6 @@
 [workspace]
 members = [
+  "src/shared",
   "src/bootsector",
   "src/stage_2"
 ]

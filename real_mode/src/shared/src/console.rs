@@ -5,11 +5,15 @@ pub fn println(s: &[u8]) {
 }
 
 pub fn print(s: &[u8]) {
-    for &c in s {
-        print_char(c);
-    }
+	let mut i = 0;
+
+	while i < s.len() {
+		print_char(s[i]);
+		i += 1;
+	}
 }
 
+#[inline(always)]
 pub fn print_char(c: u8) {
     let ax = u16::from(c) | 0x0e00;
     unsafe {
