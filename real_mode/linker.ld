@@ -1,13 +1,10 @@
 ENTRY(_start)
 
 SECTIONS {
-    .stack :
-    {
-        . = 0x500;
-        _stack_start = .;
-        . = 0x7c00;
-        _stack_end = .;
-    }
+    . = 0x500;
+    _stack_start = .;
+    . = 0x7c00;
+    _stack_end = .;
 
     .bootsector :
     {
